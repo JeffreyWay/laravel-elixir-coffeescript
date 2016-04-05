@@ -1,5 +1,6 @@
-var gulp from 'gulp';
-var Elixir from 'laravel-elixir';
+var gulp = require('gulp');
+var coffee = require('gulp-coffee');
+var Elixir = require('laravel-elixir');
 
 var $ = Elixir.Plugins;
 var config = Elixir.config;
@@ -15,34 +16,37 @@ var config = Elixir.config;
  |
  */
 
-var gulpTask = function () {
+var gulpTask = function (paths, options) {
     return (
-        gulp.src(paths.src.path)
-            .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
-            .pipe($.coffee(options || config.js.coffee.options)
-                .on('error', function(e) {
-                    new Elixir.Notification().error(
-                        e, 'CoffeeScript Compilation Failed!'
-                    );
+        gulp
+        .src(paths.src.path)
+        .pipe($.if(config.sourcemaps, $.sourcemaps.init()))
+        .pipe(coffee(options || config.js.coffee.options)
+            .on('error', function(e) {
+                new Elixir.Notification().error(
+                    e, 'CoffeeScript Compilation Failed!'
+                );
 
-                    this.emit('end');
-                }))
-            .pipe($.concat(paths.output.name))
-            .pipe($.if(config.production, $.uglify(config.js.uglify.options)))
-            .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
-            .pipe(gulp.dest(paths.output.baseDir))
-            .pipe(new Elixir.Notification('CoffeeScript Compiled!'))
+                this.emit('end');
+            }))
+        .pipe($.concat(paths.output.name))
+        .pipe($.if(config.production, $.uglify(config.js.uglify.options)))
+        .pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
+        .pipe(gulp.dest(paths.output.baseDir))
+        .pipe(new Elixir.Notification('CoffeeScript Compiled!'))
     );
 };
 
 Elixir.extend('coffee', function(src, output, options) {
-    var paths = prepGulpPaths(src, output);
+    var paths;
 
     config.js.coffee = {
         'folder': 'coffee',
         // https://github.com/wearefractal/gulp-coffee#options
         options: {}
     };
+
+    paths = prepGulpPaths(src, output);
 
     new Elixir.Task('coffee', function() {
         this.log(paths.src, paths.output);
@@ -58,7 +62,7 @@ Elixir.extend('coffee', function(src, output, options) {
  *
  * @param  {string|Array} src
  * @param  {string|null}  output
- * @return {GulpPaths}
+ * @return {Elixir.GulpPaths}
  */
 var prepGulpPaths = function(src, output) {
     return new Elixir.GulpPaths()
