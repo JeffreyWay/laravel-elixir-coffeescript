@@ -1,8 +1,8 @@
 var gulp = require('gulp');
-var coffee = require('gulp-coffee');
 var Elixir = require('laravel-elixir');
 
 var config = Elixir.config;
+var coffee;
 
 /*
  |----------------------------------------------------------------
@@ -35,6 +35,8 @@ var gulpTask = function (paths, options) {
 
 Elixir.extend('coffee', function(src, output, options) {
     var paths;
+
+    coffee = require('gulp-coffee');
 
     config.js.coffee = {
         'folder': 'coffee',
