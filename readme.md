@@ -11,7 +11,7 @@ npm install laravel-elixir-coffeescript --save-dev
 
 ## Step 2: Use It
 
-```
+```js
 // Gulpfile.js
 
 var elixir = require('laravel-elixir');
@@ -31,5 +31,3 @@ elixir(function(mix) {
 ```
 
 ## Step 3: None. You're Done.
-
-- @jeffrey_way
