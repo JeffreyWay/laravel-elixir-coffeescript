@@ -1,19 +1,20 @@
 # Laravel Elixir CoffeeScript Support
 
+This extension supports Laravel Elixir v6 and up. For older versions, CoffeeScript
+support was already baked in.
+
 ## Step 1: Install
 
 ```
 npm install laravel-elixir-coffeescript --save-dev
 ```
 
-## Step 2: Require and Use It
+## Step 2: Use It
 
 ```
 // Gulpfile.js
 
 var elixir = require('laravel-elixir');
-
-require('laravel-elixir-coffeescript');
 
 elixir(function(mix) {
     // Examples:

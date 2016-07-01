@@ -1,6 +1,6 @@
 {
   "name": "laravel-elixir-coffeescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Laravel Elixir CoffeeScript Support",
   "main": "index.js",
   "keywords": [
